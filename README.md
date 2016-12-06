@@ -10,6 +10,8 @@ space         : hard drop
 
 down arrow    : soft drop
 
+up arrow      : rotate
+
 l/r arrows    : move
 
 f             : toggle fullscreen
