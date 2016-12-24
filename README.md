@@ -1,7 +1,7 @@
 # NovoTetris
 Coded in Python 3.5, using pygame engine.
 
-![screenshot](screenshot2.jpg?raw=true "Screenshot")
+![screenshot](screenshot02.jpg?raw=true "Screenshot")
 
 Controls:
 ---------
