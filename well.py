@@ -23,6 +23,7 @@ class Well:
         self.reinit()
         ## cell arrays
         self.cells          = np.zeros((WELL_H+2, WELL_W), dtype = 'int8')
+        self.cells_c        = np.zeros((WELL_H+2, WELL_W), dtype = 'int8')
         self.cells_old      = self.cells.copy()
         self.full_rows      = []
         ## flags
@@ -36,7 +37,16 @@ class Well:
     =============================
     '''
     def reinit(self):
-        self.cell           = Cell()
+        self.cell           = [
+            Cell(),
+            Cell(GLYPH_COLORS['I']), 
+            Cell(GLYPH_COLORS['J']), 
+            Cell(GLYPH_COLORS['L']), 
+            Cell(GLYPH_COLORS['O']), 
+            Cell(GLYPH_COLORS['S']), 
+            Cell(GLYPH_COLORS['T']), 
+            Cell(GLYPH_COLORS['Z']), 
+        ]
         self.background     = get_bg(WELL_W, WELL_H, WELL_COLOR1, WELL_COLOR2)
         self.surface        = self.background.copy()
         self.rect           = self.surface.get_rect()
@@ -54,6 +64,7 @@ class Well:
     '''
     def reset(self):
         self.cells.fill(0)
+        self.cells_c.fill(0)
         self.cells_old = self.cells.copy()
         self.full_rows      = []
         self.clear_rows     = False
@@ -73,8 +84,10 @@ class Well:
             for i in range(WELL_H+2):
                 if self.cells[i].all():
                     self.full_rows.append(i)
-                    self.cells[1:i+1] = self.cells[0:i]
-                    self.cells[0] = 0
+                    self.cells[1:i+1]   = self.cells[0:i]
+                    self.cells[0]       = 0
+                    self.cells_c[1:i+1] = self.cells_c[0:i]
+                    self.cells_c[0]     = 0
             ## increase score, level and speed
             G.lines += len(self.full_rows)
             G.score += SCORE_POINTS[len(self.full_rows)-1]
@@ -138,7 +151,8 @@ class Well:
             and (self.dirty_cells[1] <= cells.multi_index[0] <= self.dirty_cells[3]):
                 x = cells.multi_index[1]*G.cell_w + 1
                 y = cells.multi_index[0]*G.cell_w + 1
-                self.surface.blit(self.cell.surface, (x, y))
+                num = self.cells_c[cells.multi_index[0]+2, cells.multi_index[1]]
+                self.surface.blit(self.cell[num].surface, (x, y))
 
         ## get mutated patch of the surface and blit to the screen
         patch_rect          = self.dirty_rect.copy()
@@ -165,7 +179,8 @@ class Well:
             if cell:
                 x = cells.multi_index[1]*G.cell_w + 1
                 y = cells.multi_index[0]*G.cell_w + 1
-                self.surface.blit(self.cell.surface, (x, y))
+                num = self.cells_c[cells.multi_index[0]+2, cells.multi_index[1]]
+                self.surface.blit(self.cell[num].surface, (x, y))
 
         ## blit to the screen
         screen.blit(self.surface, self.rect)

@@ -41,7 +41,6 @@ class ThisGlyph:
     =============================
     '''
     def reinit(self):
-        self.cell           = Cell()
         self.spawn_pos      = (G.well.rect.left + G.cell_w*(WELL_W//2-1), G.well.rect.top)
         self.rect           = pygame.Rect(0, 0, 0, 0)
         self.rect_old       = pygame.Rect(0, 0, 0, 0)
@@ -52,6 +51,9 @@ class ThisGlyph:
             self.glyph.rect.top     = G.well.rect.top  + self.glyph.pos_in_well[1]*G.cell_w
             self.glyph.rect.width   = self.glyph.cells[self.glyph.angle].shape[1]*G.cell_w
             self.glyph.rect.height  = self.glyph.cells[self.glyph.angle].shape[0]*G.cell_w
+            self.cell               = Cell(self.glyph.color)
+        else:
+            self.cell = None
 
     '''
     =============================
@@ -130,6 +132,7 @@ class ThisGlyph:
         angle                   = G.next_glyph.glyph.angle
         self.glyph              = Glyph(type, angle)
         self.glyph.rect.topleft = self.spawn_pos
+        self.cell               = Cell(self.glyph.color)
         ## offset horizontal 'I'
         if self.glyph.rect.width//G.cell_w == 4: self.glyph.rect.left -= G.cell_w
         ## set flags
@@ -153,7 +156,9 @@ class ThisGlyph:
             ## place
             left, top, right, bot = self.get_position()
             top += 2; bot += 2
-            G.well.cells[top:bot+1,left:right+1] |= self.glyph.cells[self.glyph.angle]
+            G.well.cells[top:bot+1,left:right+1]   |= self.glyph.cells[self.glyph.angle]
+            num = GLYPHS_ENUM[self.glyph.type]
+            G.well.cells_c[top:bot+1,left:right+1] |= self.glyph.cells[self.glyph.angle]*num
             ## get new glyph
             self.get_glyph()
         else:

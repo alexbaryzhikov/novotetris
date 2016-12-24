@@ -1,5 +1,5 @@
 '''
-NovoTetris v0.014
+NovoTetris v0.015
 
 Tetris is a tile-matching puzzle video game, originally designed and programmed by Russian game
 designer Alexey Pajitnov. 

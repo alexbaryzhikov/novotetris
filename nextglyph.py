@@ -20,6 +20,8 @@ class NextGlyph:
     '''
     def __init__(self):
         self.spawn_pos  = (G.well.rect.right + G.cell_w, G.cell_w)
+        self.last_glyph = None
+        self.duplicates = 0
         self.get_glyph()
         self.reinit()
         self.dirty      = False
@@ -31,7 +33,6 @@ class NextGlyph:
     =============================
     '''
     def reinit(self):
-        self.cell       = Cell(CELL_COLOR2)
         self.spawn_pos  = (G.well.rect.right + G.cell_w, G.cell_w)
         self.rect       = pygame.Rect(0, 0, 0, 0)
         self.rect_old   = pygame.Rect(0, 0, 0, 0)
@@ -41,6 +42,9 @@ class NextGlyph:
             self.glyph.rect.topleft = self.spawn_pos
             self.glyph.rect.width   = self.glyph.cells[self.glyph.angle].shape[1]*G.cell_w
             self.glyph.rect.height  = self.glyph.cells[self.glyph.angle].shape[0]*G.cell_w
+            self.cell               = Cell(self.glyph.color)
+        else:
+            self.cell       = None
 
     '''
     =============================
@@ -91,9 +95,21 @@ class NextGlyph:
     =============================
     '''
     def get_glyph(self):
-        type                    = random.choice(list(GLYPHS.keys()))
+        ## do not spawn too many duplicates
+        type = random.choice(list(GLYPHS.keys()))
+        if self.duplicates < MAX_DUPLICATES:
+            if type == self.last_glyph:
+                self.duplicates += 1
+            else:
+                self.duplicates = 0
+        else:
+            while type == self.last_glyph: type = random.choice(list(GLYPHS.keys()))
+            self.duplicates = 0
+
+        self.last_glyph         = type
         angle                   = random.choice([0, 1, 2, 3])
         self.glyph              = Glyph(type, angle)
         self.glyph.rect.topleft = self.spawn_pos
+        self.cell               = Cell(self.glyph.color)
         self.used               = False
         self.dirty              = True

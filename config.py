@@ -1,4 +1,5 @@
 ## game
+DRAW_FPS        = False
 WELL_W          = 10
 WELL_H          = 20
 MOVE_DELAY      = 0.13
@@ -9,7 +10,7 @@ MESSAGE_BLINK   = 0.7
 SCORE_POINTS    = [100, 250, 500, 1000]
 LEVEL_SCORES    = [  0,   500,  1000,  2000,  3000,  5000,  7000, 11000, 16000, 23000, 32000]
 SPEED_LEVELS    = [1.0, 0.904, 0.808, 0.712, 0.616,  0.52, 0.424, 0.328, 0.232, 0.136,  0.04]
-DRAW_FPS        = False
+MAX_DUPLICATES  = 2
 
 ## default window
 CELL_W          = 45
@@ -28,6 +29,15 @@ GLOW_COLOR      = (125, 145, 145)
 TEXT_COLOR1     = (175, 194, 170)
 TEXT_COLOR2     = (6, 10, 10)
 TEXT_COLOR3     = (43, 46, 43)
+GLYPH_COLORS    = {
+    'I' : (144, 195, 212),
+    'J' : (144, 212, 196),
+    'L' : (144, 212, 154),
+    'O' : (144, 158, 212),
+    'S' : (212, 159, 144),
+    'T' : (212, 144, 184),
+    'Z' : (171, 144, 212)
+}
 
 ## glyphs
 GLYPHS = {
@@ -74,3 +84,5 @@ GLYPHS = {
             [ [0, 1], [1, 1], [1, 0]    ]
           ]
 }
+
+GLYPHS_ENUM = {'I' : 1, 'J' : 2, 'L' : 3, 'O' : 4, 'S' : 5, 'T' : 6, 'Z' : 7}

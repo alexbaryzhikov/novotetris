@@ -23,6 +23,7 @@ class Glyph:
             np.array(GLYPHS[type][1]),
             np.array(GLYPHS[type][2]),
             np.array(GLYPHS[type][3])]
+        self.color          = GLYPH_COLORS[type]
         self.rect           = pygame.Rect(0, 0, 0, 0)
         self.rect.width     = self.cells[angle].shape[1]*G.cell_w
         self.rect.height    = self.cells[angle].shape[0]*G.cell_w
