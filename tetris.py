@@ -171,20 +171,20 @@ def events(events_queue):
         if event.type == KEYDOWN:
             ## do not allow actions while paused or finished
             if G.state not in ('paused', 'finished'):
-                if   event.__dict__['scancode'] == 75:          # arrow left
+                if   event.__dict__['key'] == 276:              # arrow left
                     G.this_glyph.move_left = True
                     G.this_glyph.move_left_now = True
-                elif event.__dict__['scancode'] == 77:          # arrow right
+                elif event.__dict__['key'] == 275:              # arrow right
                     G.this_glyph.move_right = True
                     G.this_glyph.move_right_now = True
-                elif event.__dict__['scancode'] == 72:          # arrow up
+                elif event.__dict__['key'] == 273:              # arrow up
                     G.this_glyph.rotate = True
-                elif event.__dict__['scancode'] == 80:          # arrow down
+                elif event.__dict__['key'] == 274:              # arrow down
                     G.speed = 0.04
-                elif event.__dict__['scancode'] == 57:          # space
+                elif event.__dict__['key'] == 32:               # space
                     G.this_glyph.drop = True
 
-            if event.__dict__['scancode'] == 28:                # enter
+            if event.__dict__['key'] == 13:                     # enter
                 if   G.state == 'paused':
                     ## unpause
                     G.message.reset()
@@ -200,7 +200,7 @@ def events(events_queue):
                     reset_game_objects()
                     redraw_game_screen()
 
-            elif event.__dict__['scancode'] == 33:              # 'f'
+            elif event.__dict__['key'] == 102:                  # 'f'
                 ## change screen mode
                 if G.mode == RESIZABLE:
                     G.mode = FULLSCREEN
@@ -212,11 +212,11 @@ def events(events_queue):
                 redraw_game_screen()
 
         if event.type == KEYUP:
-            if   event.__dict__['scancode'] == 75:              # arrow left
+            if   event.__dict__['key'] == 276:                  # arrow left
                 G.this_glyph.move_left = False
-            elif event.__dict__['scancode'] == 77:              # arrow right
+            elif event.__dict__['key'] == 275:                  # arrow right
                 G.this_glyph.move_right = False
-            elif event.__dict__['scancode'] == 80:              # arrow down
+            elif event.__dict__['key'] == 274:                  # arrow down
                 G.speed = G.level_speed
 
 '''

@@ -281,7 +281,7 @@ class ThisGlyph:
                 if self.move_left : self._mov_left  = True
                 if self.move_right: self._mov_right = True
             elif not self._delay and self._mov_time > MOVE_INTERVAL:
-                self._mov_time      = 0
+                self._mov_time      -= MOVE_INTERVAL
                 if self.move_left : self._mov_left  = True
                 if self.move_right: self._mov_right = True
             else:
